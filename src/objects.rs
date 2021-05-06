@@ -1,62 +1,65 @@
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-albumobject)
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-albumobject)
 pub struct AlbumObject {
     /// The type of the album: `album`, `single`, or `compilation`.
-    album_type: String,
+    pub album_type: String,
     /// The artists of the album. Each artist object includes a link in `href` to more detailed information about the artist.
-    artists: Vec<ArtistObject>,
+    pub artists: Vec<ArtistObject>,
     /// The markets in which the album is available: [ISO 3166-1 alpha-2 country codes.](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) Note that an album is considered available in a market when at least 1 of its tracks is available in that market.
-    available_markets: Vec<String>,
+    pub available_markets: Vec<String>,
     /// The copyright statements of the album.
-    copyrights: Vec<CopyrightObject>,
+    pub copyrights: Vec<CopyrightObject>,
     /// Known external IDs for the album.
-    external_ids: ExternalIdObject,
+    pub external_ids: ExternalIdObject,
     /// Known external URLs for this album.
-    external_urls: ExternalUrlObject,
+    pub external_urls: ExternalUrlObject,
     /// A list of the genres used to classify the album. For example: “Prog Rock” , “Post-Grunge”. (If not yet classified, the array is empty.)
-    genres: Vec<String>,
+    pub genres: Vec<String>,
     /// A link to the Web API endpoint providing full details of the album.
-    href: String,
+    pub href: String,
     /// The Spotify ID for the album.
-    id: String,
+    pub id: String,
     /// The cover art for the album in various sizes, widest first.
-    images: Vec<ImageObject>,
+    pub images: Vec<ImageObject>,
     /// The label for the album.
-    label: String,
+    pub label: String,
     /// The name of the album. In case of an album takedown, the value may be an empty string.
-    name: String,
+    pub name: String,
     /// The popularity of the album. The value will be between 0 and 100, with 100 being the most popular. The popularity is calculated from the popularity of the album’s individual tracks.
-    popularity: usize,
+    pub popularity: usize,
     /// The date the album was first released, for example “1981-12-15”. Depending on the precision, it might be shown as “1981” or “1981-12”.
-    release_date: String,
+    pub release_date: String,
     /// The precision with which release_date value is known: “year” , “month” , or “day”.
-    release_date_precision: String,
+    pub release_date_precision: String,
     /// Included in the response when a content restriction is applied. See [Restriction Object](https://developer.spotify.com/documentation/web-api/reference/#object-albumrestrictionobject) for more details.
-    restrictions: AlbumRestrictionObject,
+    pub restrictions: AlbumRestrictionObject,
     /// The tracks of the album.
-    tracks: Vec<SimplifiedTrackObject>,
+    pub tracks: Vec<SimplifiedTrackObject>,
     /// The object type: “album"
-    r#type: String,
+    pub r#type: String,
     /// The Spotify URI for the album.
-    uri: String,
+    pub uri: String,
 }
-
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-albumrestrictionobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-albumrestrictionobject)
 pub struct AlbumRestrictionObject {
     /// The reason for the restriction. Supported values:
     /// * `market` - The content item is not available in the given market.
     /// * `product` - The content item is not available for the user’s subscription type.
     /// * `explicit` - The content item is explicit and the user’s account is set to not play explicit content. Additional reasons may be added in the future. **Note**: If you use this field, make sure that your application safely handles unknown values.
-    reason: String,
+    pub reason: String,
 }
-
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-artistobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-artistobject)
 pub struct ArtistObject {
     /// Known external URLs for this artist.
     external_urls: ExternalUrlObject,
     /// Information about the followers of the artist.
-    followers: FollowersObject,
+    followers: Option<FollowersObject>,
     /// A list of the genres the artist is associated with. For example: `"Prog Rock"` , `"Post-Grunge"`. (If not yet classified, the array is empty.)
-    genres: Vec<String>,
+    genres: Option<Vec<String>>,
     /// A link to the Web API endpoint providing full details of the artist.
     href: String,
     /// The [Spotify ID](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the artist.
@@ -73,7 +76,7 @@ pub struct ArtistObject {
     uri: String,
 }
 
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-audiofeaturesobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-audiofeaturesobject)
 pub struct AudioFeaturesObject {
     /// A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic.
     acousticness: usize,
@@ -113,7 +116,7 @@ pub struct AudioFeaturesObject {
     valence: usize,
 }
 
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-categoryobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-categoryobject)
 pub struct CategoryObject {
     /// A link to the Web API endpoint returning full details of the category.
     href: String,
@@ -125,7 +128,7 @@ pub struct CategoryObject {
     name: String,
 }
 
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-contextobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-contextobject)
 pub struct ContextObject {
     /// External URLs for this context.
     external_urls: ExternalUrlObject,
@@ -136,16 +139,16 @@ pub struct ContextObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the context.
     uri: String,
 }
-
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-copyrightobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-copyrightobject)
 pub struct CopyrightObject {
     /// The copyright text for this content.
-    text: String,
+    pub text: String,
     /// The type of copyright: `C` = the copyright, `P` = the sound recording (performance) copyright.
     r#type: String,
 }
 
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-currentlyplayingcontextobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-currentlyplayingcontextobject)
 pub struct CurrentlyPlayingContextObject {
     /// Allows to update the user interface based on which playback actions are available within the current context.
     actions: DisallowsObject,
@@ -168,7 +171,7 @@ pub struct CurrentlyPlayingContextObject {
     /// Unix Millisecond Timestamp when data was fetched.
     timestamp: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-currentlyplayingobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-currentlyplayingobject)
 pub struct CurrentlyPlayingObject {
     /// A Context Object. Can be `null`.
     context: ContextObject,
@@ -184,12 +187,12 @@ pub struct CurrentlyPlayingObject {
     /// Unix Millisecond Timestamp when data was fetched.
     timestamp: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-cursorobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-cursorobject)
 pub struct CursorObject {
     /// The cursor to use as key to find the next page of items.
     after: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-cursorpagingobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-cursorpagingobject)
 pub struct CursorPagingObject {
     /// The cursors used to find the next set of items.
     cursors: CursorObject,
@@ -204,7 +207,7 @@ pub struct CursorPagingObject {
     /// The total number of items available to return.
     total: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-deviceobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-deviceobject)
 pub struct DeviceObject {
     /// The device ID. This may be `null`.
     id: String,
@@ -221,12 +224,12 @@ pub struct DeviceObject {
     /// The current volume in percent. This may be null.
     volume_percent: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-devicesobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-devicesobject)
 pub struct DevicesObject {
     /// A list of 0..n Device objects
     devices: Vec<DeviceObject>,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-disallowsobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-disallowsobject)
 pub struct DisallowsObject {
     /// Interrupting playback. Optional field.
     interrupting_playback: Option<bool>,
@@ -249,7 +252,7 @@ pub struct DisallowsObject {
     /// Transfering playback between devices. Optional field.
     transferring_playback: Option<bool>,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-episodeobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-episodeobject)
 pub struct EpisodeObject {
     /// A URL to a 30 second preview (MP3 format) of the episode. `null` if not available.
     audio_preview_url: String,
@@ -294,7 +297,7 @@ pub struct EpisodeObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the episode.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-episoderestrictionobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-episoderestrictionobject)
 pub struct EpisodeRestrictionObject {
     /// The reason for the restriction. Supported values:
     /// * `market` - The content item is not available in the given market.
@@ -302,51 +305,61 @@ pub struct EpisodeRestrictionObject {
     /// * `explicit` - The content item is explicit and the user’s account is set to not play explicit content. Additional reasons may be added in the future. **Note**: If you use this field, make sure that your application safely handles unknown values.
     reason: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-errorobject)
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct ErrorJSON {
+    error: ErrorObject,
+}
+#[derive(Deserialize, Serialize, Debug)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-errorobject)
 pub struct ErrorObject {
     /// A short description of the cause of the error.
     message: String,
     /// The HTTP status code (also returned in the response header; see [Response Status Codes](https://developer.spotify.com/documentation/web-api/#response-status-codes) for more information).
     status: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-explicitcontentsettingsobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-explicitcontentsettingsobject)
 pub struct ExplicitContentSettingsObject {
     /// When `true`, indicates that explicit content should not be played.
     filter_enabled: bool,
     /// When `true`, indicates that the explicit content setting is locked and can’t be changed by the user.
     filter_locked: bool,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-externalidobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-externalidobject)
 pub struct ExternalIdObject {
     /// [International Article Number](https://en.wikipedia.org/wiki/International_Article_Number)
-    ean: String,
+    pub ean: String,
     /// [International Standard Recording Code](https://en.wikipedia.org/wiki/International_Standard_Recording_Code)
-    isrc: String,
+    pub isrc: String,
     /// [Universal Product Code](https://en.wikipedia.org/wiki/Universal_Product_Code)
-    upc: String,
+    pub upc: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-externalurlobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-externalurlobject)
 pub struct ExternalUrlObject {
     /// The [Spotify URL](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the object.
-    spotify: String,
+    pub spotify: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-followersobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-followersobject)
 pub struct FollowersObject {
     /// A link to the Web API endpoint providing full details of the followers; `null` if not available. Please note that this will always be set to null, as the Web API does not support it at the moment.
     href: String,
     /// The total number of followers.
     total: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-imageobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-imageobject)
 pub struct ImageObject {
     /// The image height in pixels. If unknown: `null` or not returned.
-    height: usize,
+    pub height: Option<u32>,
     /// The source URL of the image.
-    url: String,
+    pub url: String,
     /// The image width in pixels. If unknown: `null` or not returned.
-    width: usize,
+    pub width: Option<u32>,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-linkedtrackobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-linkedtrackobject)
 pub struct LinkedTrackObject {
     /// Known external URLs for this track.
     external_urls: ExternalUrlObject,
@@ -359,7 +372,7 @@ pub struct LinkedTrackObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the track.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject)
 pub struct PagingObject {
     /// A link to the Web API endpoint returning the full result of the request
     href: String,
@@ -376,7 +389,7 @@ pub struct PagingObject {
     /// The total number of items available to return.
     total: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-playhistoryobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-playhistoryobject)
 pub struct PlayHistoryObject {
     /// The context the track was played from.
     context: ContextObject,
@@ -385,7 +398,7 @@ pub struct PlayHistoryObject {
     /// The track the user listened to.
     track: SimplifiedTrackObject,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-playererrorobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-playererrorobject)
 pub struct PlayerErrorObject {
     message: String,
     /// * `NO_PREV_TRACK` - The command requires a previous track, but there is none in the context.
@@ -410,7 +423,7 @@ pub struct PlayerErrorObject {
     /// The HTTP status code. Either `404 NOT FOUND` or `403 FORBIDDEN`. Also returned in the response header.
     status: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-playlistobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-playlistobject)
 pub struct PlaylistObject {
     /// `true` if the owner allows other users to modify the playlist.
     collaborative: bool,
@@ -441,7 +454,7 @@ pub struct PlaylistObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the playlist.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-playlisttrackobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-playlisttrackobject)
 pub struct PlaylistTrackObject {
     /// The date and time the track or episode was added. Note that some very old playlists may return `null` in this field.
     //added_at: Timestamp,
@@ -458,14 +471,14 @@ pub enum PlaylistItemType<T, E> {
     Episode(E),
 }
 
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-playlisttracksrefobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-playlisttracksrefobject)
 pub struct PlaylistTracksRefObject {
     /// A link to the Web API endpoint where full details of the playlist’s tracks can be retrieved.
     href: String,
     /// Number of tracks in the playlist.
     total: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-privateuserobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-privateuserobject)
 pub struct PrivateUserObject {
     /// The country of the user, as set in the user’s account profile. An [ISO 3166-1 alpha-2 country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This field is only available when the current user has granted access to the [user-read-private](https://developer.spotify.com/documentation/general/guides/authorization-guide/#list-of-scopes) scope.
     country: String,
@@ -492,7 +505,7 @@ pub struct PrivateUserObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the user.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-publicuserobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-publicuserobject)
 pub struct PublicUserObject {
     /// The name displayed on the user’s profile. `null` if not available.
     display_name: String,
@@ -511,7 +524,7 @@ pub struct PublicUserObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for this user.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-recommendationseedobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-recommendationseedobject)
 pub struct RecommendationSeedObject {
     /// The number of tracks available after min_* and max_* filters have been applied.
     after_filtering_size: usize, // afterFilteringSize
@@ -526,49 +539,49 @@ pub struct RecommendationSeedObject {
     /// The entity type of this seed. One of `artist`, `track` or `genre`.
     r#type: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-recommendationsobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-recommendationsobject)
 pub struct RecommendationsObject {
     /// An array of [recommendation seed objects](https://developer.spotify.com/documentation/web-api/reference/#object-recommendationseedobject).
     seeds: Vec<RecommendationSeedObject>,
     /// An array of [track object (simplified)](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedtrackobject) ordered according to the parameters supplied.
     tracks: Vec<SimplifiedTrackObject>,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-resumepointobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-resumepointobject)
 pub struct ResumePointObject {
     /// Whether or not the episode has been fully played by the user.
     fully_played: bool,
     /// The user’s most recent position in the episode in milliseconds.
     resume_position_ms: usize,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-savedalbumobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-savedalbumobject)
 pub struct SavedAlbumObject {
     /// The date and time the album was saved Timestamps are returned in ISO 8601 format as Coordinated Universal Time (UTC) with a zero offset: YYYY-MM-DDTHH:MM:SSZ. If the time is imprecise (for example, the date/time of an album release), an additional field indicates the precision; see for example, release_date in an album object.
     added_at: String,
     /// Information about the album.
     album: AlbumObject,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-savedepisodeobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-savedepisodeobject)
 pub struct SavedEpisodeObject {
     /// The date and time the episode was saved. Timestamps are returned in ISO 8601 format as Coordinated Universal Time (UTC) with a zero offset: YYYY-MM-DDTHH:MM:SSZ.
     added_at: String,
     /// Information about the episode.
     episode: EpisodeObject,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-savedshowobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-savedshowobject)
 pub struct SavedShowObject {
     /// The date and time the show was saved. Timestamps are returned in ISO 8601 format as Coordinated Universal Time (UTC) with a zero offset: YYYY-MM-DDTHH:MM:SSZ. If the time is imprecise (for example, the date/time of an album release), an additional field indicates the precision; see for example, release_date in an album object.
     added_at: String,
     /// Information about the show.
     show: SimplifiedShowObject,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-savedtrackobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-savedtrackobject)
 pub struct SavedTrackObject {
     /// The date and time the track was saved. Timestamps are returned in ISO 8601 format as Coordinated Universal Time (UTC) with a zero offset: YYYY-MM-DDTHH:MM:SSZ. If the time is imprecise (for example, the date/time of an album release), an additional field indicates the precision; see for example, release_date in an album object.
     added_at: String,
     /// Information about the track.
     track: TrackObject,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-showobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-showobject)
 pub struct ShowObject {
     /// A list of the countries in which the show can be played, identified by their [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
     available_markets: Vec<String>,
@@ -603,7 +616,7 @@ pub struct ShowObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the show.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject)
 pub struct SimplifiedAlbumObject {
     /// The type of the album: `album`, `single`, or `compilation`.
     album_type: String,
@@ -632,7 +645,7 @@ pub struct SimplifiedAlbumObject {
     /// The Spotify URI for the album.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedartistobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedartistobject)
 pub struct SimplifiedArtistObject {
     /// Known external URLs for this artist.
     external_urls: ExternalUrlObject,
@@ -647,7 +660,7 @@ pub struct SimplifiedArtistObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the artist.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedepisodeobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedepisodeobject)
 pub struct SimplifiedEpisodeObject {
     /// A URL to a 30 second preview (MP3 format) of the episode. `null` if not available.
     audio_preview_url: String,
@@ -690,7 +703,7 @@ pub struct SimplifiedEpisodeObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the episode.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedplaylistobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedplaylistobject)
 pub struct SimplifiedPlaylistObject {
     /// `true` if the owner allows other users to modify the playlist.
     collaborative: bool,
@@ -719,7 +732,7 @@ pub struct SimplifiedPlaylistObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the playlist.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedshowobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedshowobject)
 pub struct SimplifiedShowObject {
     /// A list of the countries in which the show can be played, identified by their [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
     available_markets: Vec<String>,
@@ -752,7 +765,8 @@ pub struct SimplifiedShowObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the show.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedtrackobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedtrackobject)
 pub struct SimplifiedTrackObject {
     /// The artists who performed the track. Each artist object includes a link in `href` to more detailed information about the artist.
     artists: Vec<ArtistObject>,
@@ -762,7 +776,7 @@ pub struct SimplifiedTrackObject {
     disc_number: usize,
     /// The track length in milliseconds.
     duration_ms: usize,
-    /// Whether or not the track has explicit lyrics ( `true` = yes it does; `false` = no it does not OR unknown).
+    /// Whether or not the track has explicit lyrics (`true` = yes it does; `false` = no it does not OR unknown).
     explicit: bool,
     /// Known external URLs for this track.
     external_urls: ExternalUrlObject,
@@ -789,7 +803,7 @@ pub struct SimplifiedTrackObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the track.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-trackobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-trackobject)
 pub struct TrackObject {
     /// The album on which the track appears. The album object includes a link in `href` to full information about the album.
     album: SimplifiedAlbumObject,
@@ -834,24 +848,25 @@ pub struct TrackObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the track.
     uri: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/general/guides/track-relinking-guide/)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/general/guides/track-relinking-guide/)
 pub struct LinkedFrom {
-    external_urls: ExternalUrlObject,
-    href: String,
-    id: String,
+    pub external_urls: ExternalUrlObject,
+    pub href: String,
+    pub id: String,
     r#type: String,
-    uri: String,
+    pub uri: String,
 }
-
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-trackrestrictionobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-trackrestrictionobject)
 pub struct TrackRestrictionObject {
     /// The reason for the restriction. Supported values:
     /// * `market` - The content item is not available in the given market.
     /// * `product` - The content item is not available for the user’s subscription type.
     /// * `explicit` - The content item is explicit and the user’s account is set to not play explicit content. Additional reasons may be added in the future. Note: If you use this field, make sure that your application safely handles unknown values.
-    reason: String,
+    pub reason: String,
 }
-/// [Docs](https://developer.spotify.com/documentation/web-api/reference/#object-tuneabletrackobject)
+/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-tuneabletrackobject)
 pub struct TuneableTrackObject {
     /// A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic.
     acousticness: usize,

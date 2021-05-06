@@ -3,13 +3,13 @@ use std::collections::HashMap;
 use reqwest::Url;
 use serde::Serialize;
 
+mod body;
 mod objects;
-
 pub struct Spotify {
-    authorization: String,
+    pub authorization: String,
 }
 
-enum Method {
+pub enum Method {
     GET,
     POST,
     PUT,
@@ -32,19 +32,25 @@ impl Spotify {
     fn request<T>(
         &self,
         method: Method,
-        url: &str,
-        query: HashMap<&str, &str>,
+        url: String,
+        query: Option<HashMap<&str, String>>,
         body: Option<&T>,
-    ) -> Option<String>
+    ) -> Option<(String, bool)>
     where
         T: Serialize + ?Sized,
     {
-        let url = Url::parse_with_params(
-            format!("https://api.spotify.com/v1/{}", url).as_str(),
-            query,
-        )
-        .unwrap()
-        .to_string();
+        let url = {
+            if let Some(query) = query {
+                Url::parse_with_params(
+                    format!("https://api.spotify.com/v1/{}", url).as_str(),
+                    query,
+                )
+                .unwrap()
+                .to_string()
+            } else {
+                format!("https://api.spotify.com/v1/{}", url)
+            }
+        };
 
         let client = reqwest::blocking::Client::new();
 
@@ -52,11 +58,16 @@ impl Spotify {
             Method::GET => {
                 let response = client
                     .get(url)
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
                     .bearer_auth(self.authorization.as_str())
-                    .send();
-                let text = response.unwrap().text().unwrap();
-
-                Some(text)
+                    .send()
+                    .unwrap();
+                if response.status().is_success() {
+                    Some((response.text().unwrap(), true))
+                } else {
+                    Some((response.text().unwrap(), false))
+                }
             }
             Method::POST => {
                 client
@@ -67,8 +78,23 @@ impl Spotify {
                     .unwrap();
                 None
             }
-            Method::PUT => None,
-            Method::DELETE => None,
+            Method::PUT => {
+                client
+                    .put(url)
+                    .bearer_auth(self.authorization.as_str())
+                    .json(body.unwrap())
+                    .send()
+                    .unwrap();
+                None
+            }
+            Method::DELETE => {
+                client
+                    .put(url)
+                    .bearer_auth(self.authorization.as_str())
+                    .send()
+                    .unwrap();
+                None
+            }
         }
     }
 }
