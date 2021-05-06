@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-albumobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct AlbumObject {
     /// The type of the album: `album`, `single`, or `compilation`.
     pub album_type: String,
@@ -42,8 +42,8 @@ pub struct AlbumObject {
     /// The Spotify URI for the album.
     pub uri: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-albumrestrictionobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct AlbumRestrictionObject {
     /// The reason for the restriction. Supported values:
     /// * `market` - The content item is not available in the given market.
@@ -51,8 +51,8 @@ pub struct AlbumRestrictionObject {
     /// * `explicit` - The content item is explicit and the user’s account is set to not play explicit content. Additional reasons may be added in the future. **Note**: If you use this field, make sure that your application safely handles unknown values.
     pub reason: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-artistobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ArtistObject {
     /// Known external URLs for this artist.
     external_urls: ExternalUrlObject,
@@ -300,6 +300,7 @@ pub struct EpisodeObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-episoderestrictionobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct EpisodeRestrictionObject {
     /// The reason for the restriction. Supported values:
     /// * `market` - The content item is not available in the given market.
@@ -327,8 +328,8 @@ pub struct ExplicitContentSettingsObject {
     /// When `true`, indicates that the explicit content setting is locked and can’t be changed by the user.
     filter_locked: bool,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-externalidobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ExternalIdObject {
     /// [International Article Number](https://en.wikipedia.org/wiki/International_Article_Number)
     pub ean: String,
@@ -337,22 +338,22 @@ pub struct ExternalIdObject {
     /// [Universal Product Code](https://en.wikipedia.org/wiki/Universal_Product_Code)
     pub upc: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-externalurlobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ExternalUrlObject {
     /// The [Spotify URL](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the object.
     pub spotify: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-followersobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FollowersObject {
     /// A link to the Web API endpoint providing full details of the followers; `null` if not available. Please note that this will always be set to null, as the Web API does not support it at the moment.
     href: String,
     /// The total number of followers.
     total: usize,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-imageobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ImageObject {
     /// The image height in pixels. If unknown: `null` or not returned.
     pub height: Option<u32>,
@@ -554,6 +555,7 @@ pub struct RecommendationsObject {
     tracks: Vec<SimplifiedTrackObject>,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-resumepointobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ResumePointObject {
     /// Whether or not the episode has been fully played by the user.
     fully_played: bool,
@@ -714,6 +716,7 @@ pub struct SimplifiedEpisodeObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedplaylistobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedPlaylistObject {
     /// `true` if the owner allows other users to modify the playlist.
     collaborative: bool,
@@ -775,8 +778,8 @@ pub struct SimplifiedShowObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the show.
     uri: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedtrackobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedTrackObject {
     /// The artists who performed the track. Each artist object includes a link in `href` to more detailed information about the artist.
     artists: Vec<ArtistObject>,
