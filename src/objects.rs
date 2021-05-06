@@ -139,13 +139,15 @@ pub struct ContextObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the context.
     uri: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-copyrightobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct CopyrightObject {
     /// The copyright text for this content.
     pub text: String,
     /// The type of copyright: `C` = the copyright, `P` = the sound recording (performance) copyright.
-    r#type: String,
+    #[serde(rename = "type")]
+    _type: String,
 }
 
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-currentlyplayingcontextobject)
@@ -335,7 +337,7 @@ pub struct ExternalIdObject {
     /// [Universal Product Code](https://en.wikipedia.org/wiki/Universal_Product_Code)
     pub upc: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-externalurlobject)
 pub struct ExternalUrlObject {
     /// The [Spotify URL](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the object.
@@ -525,19 +527,24 @@ pub struct PublicUserObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-recommendationseedobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct RecommendationSeedObject {
     /// The number of tracks available after min_* and max_* filters have been applied.
-    after_filtering_size: usize, // afterFilteringSize
+    #[serde(rename = "afterFilteringSize")]
+    after_filtering_size: usize,
     /// The number of tracks available after relinking for regional availability.
-    after_relinking_size: usize, // afterRelinkingSize
+    #[serde(rename = "afterRelinkingSize")]
+    after_relinking_size: usize,
     /// A link to the full track or artist data for this seed. For tracks this will be a link to a [Track Object](https://developer.spotify.com/documentation/web-api/reference/#object-trackobject). For artists a link to [an Artist Object](https://developer.spotify.com/documentation/web-api/reference/#object-artistobject). For genre seeds, this value will be `null`.
     href: String,
     /// The id used to select this seed. This will be the same as the string used in the `seed_artists`, `seed_tracks` or `seed_genres` parameter.
     id: String,
     /// The number of recommended tracks available for this seed.
-    initialPoolSize: usize,
+    #[serde(rename = "initialPoolSize")]
+    initial_pool_size: usize,
     /// The entity type of this seed. One of `artist`, `track` or `genre`.
-    r#type: String,
+    #[serde(rename = "type")]
+    _type: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-recommendationsobject)
 pub struct RecommendationsObject {
@@ -582,6 +589,7 @@ pub struct SavedTrackObject {
     track: TrackObject,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-showobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ShowObject {
     /// A list of the countries in which the show can be played, identified by their [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
     available_markets: Vec<String>,
@@ -612,7 +620,8 @@ pub struct ShowObject {
     /// The publisher of the show.
     publisher: String,
     /// The object type: “show”.
-    r#type: String,
+    #[serde(rename = "initialPoolSize")]
+    _type: String,
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the show.
     uri: String,
 }
@@ -661,6 +670,7 @@ pub struct SimplifiedArtistObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedepisodeobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedEpisodeObject {
     /// A URL to a 30 second preview (MP3 format) of the episode. `null` if not available.
     audio_preview_url: String,
