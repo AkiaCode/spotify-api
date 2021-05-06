@@ -255,6 +255,7 @@ pub struct DisallowsObject {
     transferring_playback: Option<bool>,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-episodeobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct EpisodeObject {
     /// A URL to a 30 second preview (MP3 format) of the episode. `null` if not available.
     audio_preview_url: String,
@@ -458,6 +459,7 @@ pub struct PlaylistObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-playlisttrackobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PlaylistTrackObject {
     /// The date and time the track or episode was added. Note that some very old playlists may return `null` in this field.
     //added_at: Timestamp,
@@ -469,6 +471,7 @@ pub struct PlaylistTrackObject {
     track: PlaylistItemType<TrackObject, EpisodeObject>,
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub enum PlaylistItemType<T, E> {
     Track(T),
     Episode(E),
@@ -509,6 +512,7 @@ pub struct PrivateUserObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-publicuserobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PublicUserObject {
     /// The name displayed on the user’s profile. `null` if not available.
     display_name: String,
@@ -628,6 +632,7 @@ pub struct ShowObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedAlbumObject {
     /// The type of the album: `album`, `single`, or `compilation`.
     album_type: String,
@@ -746,6 +751,7 @@ pub struct SimplifiedPlaylistObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedshowobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedShowObject {
     /// A list of the countries in which the show can be played, identified by their [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
     available_markets: Vec<String>,
@@ -817,6 +823,7 @@ pub struct SimplifiedTrackObject {
     uri: String,
 }
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-trackobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct TrackObject {
     /// The album on which the track appears. The album object includes a link in `href` to full information about the album.
     album: SimplifiedAlbumObject,
@@ -861,8 +868,8 @@ pub struct TrackObject {
     /// The [Spotify URI](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids) for the track.
     uri: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 /// [Reference](https://developer.spotify.com/documentation/general/guides/track-relinking-guide/)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LinkedFrom {
     pub external_urls: ExternalUrlObject,
     pub href: String,
@@ -870,8 +877,9 @@ pub struct LinkedFrom {
     r#type: String,
     pub uri: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+
 /// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-trackrestrictionobject)
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct TrackRestrictionObject {
     /// The reason for the restriction. Supported values:
     /// * `market` - The content item is not available in the given market.
