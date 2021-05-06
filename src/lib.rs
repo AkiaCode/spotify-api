@@ -3,8 +3,8 @@ use std::collections::HashMap;
 use reqwest::Url;
 use serde::Serialize;
 
-mod body;
-mod objects;
+pub mod body;
+pub mod objects;
 pub struct Spotify {
     pub authorization: String,
 }
