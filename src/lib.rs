@@ -29,7 +29,7 @@ impl Spotify {
         }
     }
 
-    fn request<T>(
+    pub fn request<T>(
         &self,
         method: Method,
         url: String,
