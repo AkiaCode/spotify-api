@@ -1,6 +1,6 @@
 [package]
 name = "spotify-api"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Akiacode <catry.me@gmail.com>"]
 edition = "2018"
 description = "Spotify Web API (objects)"
